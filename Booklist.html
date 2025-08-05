@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Reading List</title>
+    <link rel="stylesheet" href="booklist-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-book-open"></i>
+                    <span>My Reading List</span>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-secondary" id="viewCompletedBtn">
+                        <i class="fas fa-check-circle"></i>
+                        Completed Books
+                    </button>
+                    <a href="index.html" class="btn-secondary">
+                        <i class="fab fa-linkedin"></i>
+                        LinkedIn Drafter
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Add Book Section -->
+            <div class="add-book-container">
+                <div class="add-book-header">
+                    <h2>Add New Book</h2>
+                </div>
+                <div class="add-book-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookTitle">Book Title *</label>
+                            <input type="text" id="bookTitle" placeholder="Enter book title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookAuthor">Author</label>
+                            <input type="text" id="bookAuthor" placeholder="Enter author name">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookGenre">Genre</label>
+                            <select id="bookGenre">
+                                <option value="">Select genre</option>
+                                <option value="Fiction">Fiction</option>
+                                <option value="Non-Fiction">Non-Fiction</option>
+                                <option value="Science Fiction">Science Fiction</option>
+                                <option value="Fantasy">Fantasy</option>
+                                <option value="Mystery">Mystery</option>
+                                <option value="Thriller">Thriller</option>
+                                <option value="Romance">Romance</option>
+                                <option value="Biography">Biography</option>
+                                <option value="Self-Help">Self-Help</option>
+                                <option value="Business">Business</option>
+                                <option value="Technology">Technology</option>
+                                <option value="History">History</option>
+                                <option value="Philosophy">Philosophy</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookPriority">Priority</label>
+                            <select id="bookPriority">
+                                <option value="Low">Low</option>
+                                <option value="Medium" selected>Medium</option>
+                                <option value="High">High</option>
+                                <option value="Urgent">Urgent</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookNotes">Notes</label>
+                        <textarea id="bookNotes" placeholder="Add any notes about this book (optional)" rows="3"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn-clear" id="clearFormBtn">
+                            <i class="fas fa-eraser"></i>
+                            Clear Form
+                        </button>
+                        <button class="btn-add" id="addBookBtn">
+                            <i class="fas fa-plus"></i>
+                            Add to Reading List
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reading List Section -->
+            <div class="reading-list-container">
+                <div class="list-header">
+                    <h2>My Reading List</h2>
+                    <div class="list-controls">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchBooks" placeholder="Search books...">
+                        </div>
+                        <select id="filterGenre">
+                            <option value="">All Genres</option>
+                            <option value="Fiction">Fiction</option>
+                            <option value="Non-Fiction">Non-Fiction</option>
+                            <option value="Science Fiction">Science Fiction</option>
+                            <option value="Fantasy">Fantasy</option>
+                            <option value="Mystery">Mystery</option>
+                            <option value="Thriller">Thriller</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Biography">Biography</option>
+                            <option value="Self-Help">Self-Help</option>
+                            <option value="Business">Business</option>
+                            <option value="Technology">Technology</option>
+                            <option value="History">History</option>
+                            <option value="Philosophy">Philosophy</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <select id="filterPriority">
+                            <option value="">All Priorities</option>
+                            <option value="Urgent">Urgent</option>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="books-list" id="booksList">
+                    <!-- Books will be populated here -->
+                </div>
+            </div>
+
+            <!-- Completed Books Section -->
+            <div class="completed-section" id="completedSection" style="display: none;">
+                <div class="completed-header">
+                    <h2>Completed Books</h2>
+                    <button class="btn-close" id="closeCompletedBtn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="completed-list" id="completedList">
+                    <!-- Completed books will be populated here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="toastMessage"></span>
+        </div>
+    </div>
+
+    <!-- Book Details Modal -->
+    <div class="modal" id="bookModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Book Details</h3>
+                <button class="btn-close" id="closeModalBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Book details will be populated here -->
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" id="editBookBtn">
+                    <i class="fas fa-edit"></i>
+                    Edit
+                </button>
+                <button class="btn-complete" id="completeBookBtn">
+                    <i class="fas fa-check"></i>
+                    Mark as Completed
+                </button>
+                <button class="btn-delete" id="deleteBookBtn">
+                    <i class="fas fa-trash"></i>
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="booklist-script.js"></script>
+</body>
+</html> 
